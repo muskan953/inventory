@@ -74,7 +74,7 @@ class NewMailScreen extends StatelessWidget {
           top: 16.h,
           bottom: 16.h,
         ),
-        onTap: () {},
+        onTap: () => Navigator.pop(context),
       ),
       centerTitle: true,
       title: AppbarSubtitle(

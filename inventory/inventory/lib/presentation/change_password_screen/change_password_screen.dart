@@ -15,7 +15,9 @@ class ChangePasswordScreen extends StatefulWidget {
 
 class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   TextEditingController newpasswordController = TextEditingController();
-  bool _obscurePassword = true;
+  bool isPasswordVisible = false;
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,26 +25,35 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: _buildAppbar(context),
-        body: SafeArea(
-  child: Padding(
-    padding: EdgeInsets.symmetric(horizontal: 16.h),
-    child: Column(
-      children: [
-        _buildColumnnowyoucan(context),
-        SizedBox(height: 28.h),
-        _buildColumnnewpasswo(context),
-        SizedBox(height: 32.h),
-        CustomElevatedButton(
-          text: "Save Changes",
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.h),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                _buildColumnnowyoucan(context),
+                SizedBox(height: 28.h),
+                _buildColumnnewpasswo(context),
+                SizedBox(height: 32.h),
+                CustomElevatedButton(
+                  text: "Save Changes",
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      // ✅ perform save logic here
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Password Changed Successfully")),
+                      );
+                    }
+                  },
+                ),
+                SizedBox(height: 20.h),
+              ],
+            ),
+          ),
         ),
-        SizedBox(height: 20.h), // distance from bottom
-      ],
-    ),
-  ),),),
-  );
-
-}
-
+      ),
+    );
+  }
 
   /// Section Widget
   PreferredSizeWidget _buildAppbar(BuildContext context) {
@@ -50,21 +61,15 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
       leadingWidth: 40.h,
       leading: AppbarLeadingImageOne(
         imagePath: ImageConstant.imgArrowLeftBlack900,
-        margin: EdgeInsets.only(
-          left: 16.h,
-          top: 7.h,
-          bottom: 24.h,
-        ),
-        onTap: () {},
+        margin: EdgeInsets.only(left: 16.h, top: 7.h, bottom: 24.h),
+        onTap: () => Navigator.pop(context),
       ),
       centerTitle: true,
-      title: AppbarTitle(
-        text: "Change Password",
-      ),
+      title: AppbarTitle(text: "Change Password"),
     );
   }
 
-  /// Section Widget
+  /// Info text
   Widget _buildColumnnowyoucan(BuildContext context) {
     return Container(
       width: double.maxFinite,
@@ -77,72 +82,57 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
-            style: CustomTextStyles.titleMediumGray60001.copyWith(
-              height: 1.50,
-            ),
+            style: CustomTextStyles.titleMediumGray60001.copyWith(height: 1.50),
           )
         ],
       ),
     );
   }
 
-  /// Section Widget
- Widget _buildColumnnewpasswo(BuildContext context) {
-  return Container(
-    width: double.maxFinite,
-    padding: EdgeInsets.symmetric(horizontal: 16.h),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "New Password",
-          style: CustomTextStyles.titleSmallOnPrimary,
-        ),
-        SizedBox(height: 4.h),
-        CustomTextFormField(
-          controller: newpasswordController,
-          textInputAction: TextInputAction.done,
-          obscureText: _obscurePassword,
-          suffix: IconButton(
-            icon: Icon(
-              _obscurePassword ? Icons.visibility_off : Icons.visibility,
-              color: Colors.grey,
-            ),
-            onPressed: () {
-              setState(() {
-                _obscurePassword = !_obscurePassword;
-              });
-            },
-          ),
-          suffixConstraints: BoxConstraints(maxHeight: 44.h),
-          contentPadding: EdgeInsets.all(12.h),
-          borderDecoration: TextFormFieldStyleHelper.outlineGray,
-          filled: true,
-          fillColor: appTheme.whiteA700,
-        ),
-      ],
-    ),
-  );
-}
-
-  /// Section Widget
-  Widget _buildColumnsave(BuildContext context) {
+  /// Password Field
+  Widget _buildColumnnewpasswo(BuildContext context) {
     return Container(
       width: double.maxFinite,
-      margin: EdgeInsets.symmetric(horizontal: 16.h),
+      padding: EdgeInsets.symmetric(horizontal: 16.h),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomElevatedButton(
-            text: "Save Changes",
-          )
+          Text("New Password", style: CustomTextStyles.titleSmallOnPrimary),
+          SizedBox(height: 4.h),
+          CustomTextFormField(
+            controller: newpasswordController,
+            textInputAction: TextInputAction.done,
+            obscureText: !isPasswordVisible,
+            suffix: Padding(
+              padding: EdgeInsets.only(right: 4.h),
+              child: IconButton(
+                icon: Icon(
+                  isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                  size: 28,
+                ),
+                onPressed: () {
+                  setState(() {
+                    isPasswordVisible = !isPasswordVisible;
+                  });
+                },
+              ),
+            ),
+            contentPadding: EdgeInsets.all(12.h),
+            borderDecoration: TextFormFieldStyleHelper.outlineOnPrimaryContainer,
+            filled: true,
+            fillColor: appTheme.whiteA700,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Please enter your password';
+              }
+              if (value.length < 6) {
+                return 'Password must be at least 6 characters';
+              }
+              return null;
+            },
+          ),
         ],
       ),
     );
   }
-
-  /// Navigates back to the previous screen.
-  onTapArrowleftone(BuildContext context) {
-    Navigator.pop(context);
-  }
 }
-

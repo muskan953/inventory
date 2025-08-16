@@ -115,9 +115,9 @@ class AppNavigationScreen extends StatelessWidget {
                         ),
                         _buildScreenTitle(
                           context,
-                          screenTitle: "Create Profile",
+                          screenTitle: "Chatbot",
                           onTapScreenTitle: () => onTapScreenTitle(
-                              context, AppRoutes.createProfileScreen),
+                              context, AppRoutes.chatBotScreen),
                         ),
                         _buildScreenTitle(
                           context,

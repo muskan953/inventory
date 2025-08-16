@@ -65,7 +65,8 @@ class ForgotPasswordScreen extends StatelessWidget {
           top: 7.h,
           bottom: 24.h,
         ),
-        onTap: () {},
+        
+        onTap: () => Navigator.pop(context),
       ),
       centerTitle: true,
       title: AppbarTitle(

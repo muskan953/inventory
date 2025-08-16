@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
+import 'package:inventory/presentation/login_screen/login_screen.dart';
 import '../../widgets/app_bar/appbar_leading_image_one.dart';
 import '../../widgets/app_bar/appbar_title.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
-import '../../widgets/custom_checkbox_button.dart';
+//import '../../widgets/custom_checkbox_button.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_text_form_field.dart';
 import 'package:flutter/gestures.dart';
+import '../terms_and _condition/terms_and_condition.dart';
 
 class SignUpOneScreen extends StatefulWidget {
   const SignUpOneScreen({Key? key}) : super(key: key);
@@ -137,6 +139,15 @@ class _SignUpOneScreenState extends State<SignUpOneScreen> {
                         TextSpan(
                           text: "Login",
                           style: theme.textTheme.bodySmall,
+                          recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                    Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                     builder: (context) => LoginScreen(),
+                                     ),
+                                  );
+                                }
                         )
                       ],
                     ),
@@ -163,7 +174,7 @@ class _SignUpOneScreenState extends State<SignUpOneScreen> {
           top: 8.h,
           bottom: 23.h,
         ),
-        onTap: () {},
+        onTap: () => Navigator.pop(context),
       ),
       centerTitle: true,
       title: AppbarTitle(
@@ -254,36 +265,35 @@ class _SignUpOneScreenState extends State<SignUpOneScreen> {
 Widget _buildCheckbox(BuildContext context) {
   return Align(
     alignment: Alignment.centerLeft,
+    child: Padding(
+      padding: EdgeInsets.only(left: 4.h),
     child: Row(
       children: [
         Checkbox(
           value: checkbox,
           onChanged: (value) {
-            checkbox = value!;
-            // You'll need to convert this to a StatefulWidget to use setState
+            setState(() {
+              checkbox = value!;
+            });
           },
         ),
         Expanded(
           child: RichText(
             text: TextSpan(
               text: 'Agree to the ',
-              style: TextStyle(color: Colors.black),
+              style: CustomTextStyles.titleSmallOnPrimary,
               children: [
                 TextSpan(
                   text: 'Terms & Conditions',
-                  style: TextStyle(
-                    color: Colors.blue,
-                    decoration: TextDecoration.none,
-                  ),
+                  style: CustomTextStyles.labelLargePrimary?.copyWith(),
                   recognizer: TapGestureRecognizer()
                     ..onTap = () {
-                      // TODO: Navigate to terms page or show a dialog
-                      //Navigator.push(
-                        //context,
-                        //MaterialPageRoute(
-                          //builder: (context) => TermsAndConditionsScreen(),
-                        //),
-                     // );
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => TermsAndConditionsScreen(),
+                          ),
+                         );
                     },
                 ),
               ],
@@ -291,6 +301,7 @@ Widget _buildCheckbox(BuildContext context) {
           ),
         ),
       ],
+    ),
     ),
   );
 }

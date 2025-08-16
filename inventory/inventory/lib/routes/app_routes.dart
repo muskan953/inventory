@@ -3,7 +3,6 @@ import '../presentation/app_navigation_screen/app_navigation_screen.dart';
 import '../presentation/change_mail_screen/change_mail_screen.dart';
 import '../presentation/change_password_screen/change_password_screen.dart';
 import '../presentation/continue_with_phone_number_screen/continue_with_phone_number_screen.dart';
-import '../presentation/create_profile_screen/create_profile_screen.dart';
 import '../presentation/edit_profile_screen/edit_profile_screen.dart';
 import '../presentation/forgot_password_screen/forgot_password_screen.dart';
 import '../presentation/login_screen/login_screen.dart';
@@ -17,6 +16,7 @@ import '../presentation/settings_page/settings_page.dart';
 import '../presentation/terms_and _condition/terms_and_condition.dart';
 import '../presentation/privacy_policy/privacy_policy.dart';
 import '../presentation/new_mail/new_mail.dart';
+import '../presentation/chatbot/chatbot.dart';
 
 // ignore_for_file: must_be_immutable
 class AppRoutes {
@@ -29,7 +29,6 @@ class AppRoutes {
 
   static const String verifyOtpScreen = '/verify_otp_screen';
 
-  static const String createProfileScreen = '/create_profile_screen';
 
   static const String signUpOneScreen = '/sign_up_one_screen';
 
@@ -52,6 +51,8 @@ class AppRoutes {
 
   static const String newmail = '/newmail';
 
+  static const String chatBotScreen  = '/ChatBotScreen ';
+
   static const String passwordManagerScreen = '/password_manager_screen';
 
   static const String editProfileScreen = '/edit_profile_screen';
@@ -72,7 +73,6 @@ class AppRoutes {
     signUpScreen: (context) => SignUpScreen(),
     continueWithPhoneNumberScreen: (context) => ContinueWithPhoneNumberScreen(),
     verifyOtpScreen: (context) => VerifyOtpScreen(),
-    createProfileScreen: (context) => CreateProfileScreen(),
     signUpOneScreen: (context) => SignUpOneScreen(),
     forgotPasswordScreen: (context) => ForgotPasswordScreen(),
     otpVerificationScreen: (context) => OtpVerificationScreen(),
@@ -81,6 +81,7 @@ class AppRoutes {
     termsandcondition: (context) => TermsAndConditionsScreen(),
     privacypolicy :(context) => PrivacyPolicyScreen(),
     newmail :(context) => NewMailScreen(),
+    chatBotScreen  :(context) => ChatBotScreen (),
     editProfileScreen: (context) => EditProfileScreen(),
     notificationsPreferancesScreen: (context) =>
         NotificationsPreferancesScreen(),
